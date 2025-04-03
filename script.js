@@ -1,4 +1,4 @@
-document.addEventListenerdocument.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     let opciones = document.getElementById("opciones");
     let btnSorpresa = document.getElementById("btnSorpresa");
     let container = document.querySelector(".container");
@@ -15,7 +15,7 @@ document.addEventListenerdocument.addEventListener("DOMContentLoaded", function 
 
     let rooftopForm = document.getElementById("rooftopForm");
     let glampingForm = document.getElementById("glampingForm");
-    let imagenFinal = document.getElementById("imagenFinal"); 
+    let imagenFinal = document.getElementById("imagenFinal");
 
     let eleccion = ""; 
 
@@ -87,33 +87,24 @@ document.addEventListenerdocument.addEventListener("DOMContentLoaded", function 
 
     ultimaSi?.addEventListener("click", function () {
         console.log("Última confirmación positiva");
-    
-        // Google Sheets
+
+        // Google Sheets: Enviar datos
         fetch("https://script.google.com/macros/s/AKfycbwpTPnup0QKh7EACkSd2GpBD_2fCR3NQnYr7zCrbOLZa6-egoGa3nUvAOmCaQePaoL8pA/exec", {
             method: "POST",
-            mode: "no-cors",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ opcion: eleccion })
-        }).then(() => {
-            console.log("Datos enviados a Google Sheets");
-
-            // Ocultar formularios y mostrar imagen final
-            rooftopForm.style.display = "none";
-            glampingForm.style.display = "none";
-            imagenFinal.style.display = "block";
-        });
-
-        ultimaConfirmacion.style.display = "none";
-
-        if (eleccion === "Rooftop") {
-            rooftopForm.style.display = "block";
-            glampingForm.style.display = "none";
-        } else if (eleccion === "Glamping") {
-            glampingForm.style.display = "block";
-            rooftopForm.style.display = "none";
-        }
+        }).then(response => {
+            console.log("Datos enviados correctamente");
+            
+            setTimeout(() => {
+                ultimaConfirmacion.style.display = "none";
+                rooftopForm.style.display = "none";
+                glampingForm.style.display = "none";
+                imagenFinal.style.display = "block"; 
+            }, 1000); 
+        }).catch(error => console.error("Error enviando datos:", error));
     });
 
     ultimaNo?.addEventListener("click", function () {
