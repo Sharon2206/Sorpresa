@@ -85,26 +85,25 @@ document.addEventListener("DOMContentLoaded", function () {
         opciones.style.display = "flex";
     });
 
+  
     ultimaSi?.addEventListener("click", function () {
         console.log("Última confirmación positiva");
 
-        // Google Sheets: Enviar datos
+        
         fetch("https://script.google.com/macros/s/AKfycbwpTPnup0QKh7EACkSd2GpBD_2fCR3NQnYr7zCrbOLZa6-egoGa3nUvAOmCaQePaoL8pA/exec", {
             method: "POST",
+            mode: "no-cors",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ opcion: eleccion })
-        }).then(response => {
-            console.log("Datos enviados correctamente");
-            
-            setTimeout(() => {
-                ultimaConfirmacion.style.display = "none";
-                rooftopForm.style.display = "none";
-                glampingForm.style.display = "none";
-                imagenFinal.style.display = "block"; 
-            }, 1000); 
-        }).catch(error => console.error("Error enviando datos:", error));
+        }).then(() => console.log("Datos enviados a Google Sheets"));
+
+       
+        ultimaConfirmacion.style.display = "none";
+        rooftopForm.style.display = "none";
+        glampingForm.style.display = "none";
+        imagenFinal.style.display = "block"; 
     });
 
     ultimaNo?.addEventListener("click", function () {
@@ -113,7 +112,10 @@ document.addEventListener("DOMContentLoaded", function () {
         opciones.style.display = "flex"; 
     });
 
+ 
     rooftopForm.style.display = "none";
     glampingForm.style.display = "none";
     imagenFinal.style.display = "none";  
 });
+
+
