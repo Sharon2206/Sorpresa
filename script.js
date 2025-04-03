@@ -1,83 +1,123 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const btnSorpresa = document.getElementById("btnSorpresa");
-    const opciones = document.getElementById("opciones");
-    const btnRooftop = document.getElementById("btnRooftop");
-    const btnGlamping = document.getElementById("btnGlamping");
-    const confirmacion = document.getElementById("confirmacion");
-    const confirmarSi = document.getElementById("confirmarSi");
-    const confirmarNo = document.getElementById("confirmarNo");
-    const rooftopForm = document.getElementById("rooftopForm");
-    const glampingForm = document.getElementById("glampingForm");
-    const ultimaConfirmacion = document.getElementById("ultimaConfirmacion");
-    const ultimaSi = document.getElementById("ultimaSi");
-    const ultimaNo = document.getElementById("ultimaNo");
+document.addEventListener("DOMContentLoaded", function () {
+    let opciones = document.getElementById("opciones");
+    let btnSorpresa = document.getElementById("btnSorpresa");
+    let container = document.querySelector(".container");
 
-    let opcionSeleccionada = "";
+    let btnRooftop = document.getElementById("btnRooftop");
+    let btnGlamping = document.getElementById("btnGlamping");
+    let confirmacion = document.getElementById("confirmacion");
+    let ultimaConfirmacion = document.getElementById("ultimaConfirmacion");
 
-    // 🎉 Función para lanzar confeti al abrir la sorpresa
+    let confirmarSi = document.getElementById("confirmarSi");
+    let confirmarNo = document.getElementById("confirmarNo");
+    let ultimaSi = document.getElementById("ultimaSi");
+    let ultimaNo = document.getElementById("ultimaNo");
+
+    let rooftopForm = document.getElementById("rooftopForm");
+    let glampingForm = document.getElementById("glampingForm");
+
+    let guardarRooftop = document.getElementById("guardarRooftop");
+    let guardarGlamping = document.getElementById("guardarGlamping");
+
+    let eleccion = ""; 
+
     function lanzarConfeti() {
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
+        console.log("Lanzando confeti...");
+        if (typeof confetti !== "function") {
+            console.error("Confetti.js no se ha cargado correctamente.");
+            return;
+        }
+
+        var duracion = 2 * 1000; 
+        var end = Date.now() + duracion;
+
+        (function frame() {
+            confetti({
+                particleCount: 7,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+
+            confetti({
+                particleCount: 7,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        })();
     }
 
-    // Paso 1: Mostrar opciones al abrir la sorpresa
-    btnSorpresa.addEventListener("click", function() {
-        lanzarConfeti();
-        btnSorpresa.style.display = "none";
-        opciones.classList.remove("hidden");
+    // Ejecutar confeti al cargar la página
+    setTimeout(lanzarConfeti, 500);
+
+    btnSorpresa?.addEventListener("click", function () {
+        console.log("Botón de sorpresa presionado");
+        container.style.display = "none";
+        opciones.style.display = "flex";
     });
 
-    // Paso 2: Selección entre Rooftop o Glamping
-    btnRooftop.addEventListener("click", function() {
-        opcionSeleccionada = "rooftop";
-        opciones.classList.add("hidden");
-        confirmacion.classList.remove("hidden");
+    function seleccionarOpcion(opcion) {
+        eleccion = opcion; 
+        console.log("Opción seleccionada:", eleccion);
+        opciones.style.display = "none";
+        confirmacion.style.display = "block";
+    }
+
+    btnRooftop?.addEventListener("click", function () {
+        seleccionarOpcion("Rooftop");
     });
 
-    btnGlamping.addEventListener("click", function() {
-        opcionSeleccionada = "glamping";
-        opciones.classList.add("hidden");
-        confirmacion.classList.remove("hidden");
+    btnGlamping?.addEventListener("click", function () {
+        seleccionarOpcion("Glamping");
     });
 
-    // Paso 3: Confirmar elección
-    confirmarSi.addEventListener("click", function() {
-        confirmacion.classList.add("hidden");
-        
-        if (opcionSeleccionada === "rooftop") {
-            rooftopForm.classList.remove("hidden");
-        } else if (opcionSeleccionada === "glamping") {
-            glampingForm.classList.remove("hidden");
+    confirmarSi?.addEventListener("click", function () {
+        console.log("Confirmación positiva");
+        confirmacion.style.display = "none";
+        ultimaConfirmacion.style.display = "block"; // Ahora se muestra la última pregunta ANTES del formulario
+    });
+
+    confirmarNo?.addEventListener("click", function () {
+        console.log("Confirmación negativa");
+        confirmacion.style.display = "none";
+        opciones.style.display = "flex";
+    });
+
+    ultimaSi?.addEventListener("click", function () {
+        console.log("Última confirmación positiva");
+
+        ultimaConfirmacion.style.display = "none";
+
+        if (eleccion === "Rooftop") {
+            rooftopForm.style.display = "block";
+        } else if (eleccion === "Glamping") {
+            glampingForm.style.display = "block";
         }
     });
 
-    confirmarNo.addEventListener("click", function() {
-        confirmacion.classList.add("hidden");
-        opciones.classList.remove("hidden");
+    ultimaNo?.addEventListener("click", function () {
+        console.log("Última confirmación negativa");
+        ultimaConfirmacion.style.display = "none";
+        opciones.style.display = "flex"; // Regresar a las opciones
     });
 
-    // Paso 4: Mostrar última pregunta antes de confirmar elección
-    document.getElementById("guardarRooftop").addEventListener("click", function() {
-        rooftopForm.classList.add("hidden");
-        ultimaConfirmacion.classList.remove("hidden");
-    });
-
-    document.getElementById("guardarGlamping").addEventListener("click", function() {
-        glampingForm.classList.add("hidden");
-        ultimaConfirmacion.classList.remove("hidden");
-    });
-
-    // Paso 5: Confirmar la última decisión
-    ultimaSi.addEventListener("click", function() {
-        ultimaConfirmacion.classList.add("hidden");
+    guardarRooftop?.addEventListener("click", function () {
+        rooftopForm.style.display = "none";
         alert("¡Reserva confirmada! 🎉");
     });
 
-    ultimaNo.addEventListener("click", function() {
-        ultimaConfirmacion.classList.add("hidden");
-        opciones.classList.remove("hidden");
+    guardarGlamping?.addEventListener("click", function () {
+        glampingForm.style.display = "none";
+        alert("¡Reserva confirmada! 🎉");
     });
+
+    // Asegurar que todo está oculto al inicio
+    rooftopForm.style.display = "none";
+    glampingForm.style.display = "none";
+    ultimaConfirmacion.style.display = "none"; // Se oculta al inicio
 });
