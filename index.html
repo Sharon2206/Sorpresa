@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container" id="mainContainer">
+        <h1>Sebas..! ❤</h1>
+        <p>Hoy es un día muy especial, y no podía dejarlo pasar como si nada. Desde que comenzamos a compartir tiempo juntos, cada momento ha sido una experiencia única, llena de risas, conversaciones interesantes y esa energía tuya que contagia. Aunque llevamos poco tiempo conociéndonos, ya me he dado cuenta de que eres alguien increíble y especial para mí, y por eso hoy quiero desearte todo lo mejor en este nuevo año de vida.</p>
+        <p>Admiro muchas cosas de ti: tu manera de ver la vida y entusiasmo, esa euforia con la que enfrentas cada día, y cómo logras que todo a tu alrededor se sienta más ligero y divertido. No cualquiera tiene esa chispa tan especial que tú tienes, y es algo que realmente aprecio de ti. Me encanta compartir contigo, descubrir poco a poco quién eres y ver cómo cada día me sorprendes con algo nuevo. Espero que la vida nos dé la oportunidad de seguir compartiendo muchos más momentos, que este sea solo el comienzo de algo bonito.</p>
+        <p>Hoy deseo que disfrutes al máximo, que celebres rodeado de personas que te quieren, que recibas muchísimo cariño y que cada deseo que tengas se vaya cumpliendo poco a poco. Que la vida te siga regalando muchas razones para sonreír, que nunca pierdas esa esencia tuya tan única y que sigas brillando con tu propia luz.</p>
+        <p>Aquí estaré para seguir celebrando contigo, apoyándote en lo que necesites y disfrutando de todo lo que venga. ¡Feliz cumpleaños Sebas! Que este sea un año lleno de éxitos, aventuras, risas y momentos inolvidables. 🥂🎉🎂</p>
+        <button id="btnSorpresa">¡Vamos por tu sorpresa!</button>
+    </div>
+
+    <div id="opciones" class="options-container hidden">
+        <h2>Selecciona tu regalo</h2>
+        <div class="opciones-flex">
+            <div class="opcion">
+                <p>Opción 1</p>
+                <button id="btnRooftop">
+                    Ir a un Rooftop  
+                    <img src="rooftop.png" alt="rooftop">
+                </button>
+            </div>
+            <div class="opcion">
+                <p>Opción 2</p>
+                <button id="btnGlamping">
+                    Ir a un Glamping  
+                    <img src="glamping.png" alt="glamping">
+                </button>
+            </div>
+        </div>
+    </div>
+
+<div id="rooftopForm" class="hidden formulario">
+    <h3>¿Prefieres en la tarde o en la noche?</h3>
+    <select>
+        <option value="tarde">Tarde</option>
+        <option value="noche">Noche</option>
+    </select>
+    <label>Selecciona el día:</label>
+    <input type="date">
+    <label>Selecciona la hora:</label>
+    <input type="time">
+    <button id="guardarRooftop" class="boton-hecho">¡Hecho!</button>
+</div>
+
+<div id="glampingForm" class="hidden formulario">
+    <h3>¿Prefieres clima cálido o clima frío? </h3>
+    <select>
+        <option value="calido">Clima cálido</option>
+        <option value="frio">Clima frío</option>
+    </select>
+    <label>Selecciona el día:</label>
+    <input type="date">
+    <label>Selecciona la hora:</label>
+    <input type="time">
+    <button id="guardarGlamping" class="boton-hecho">¡Hecho!</button>
+</div>
+
+
+    <div id="confirmacion" class="hidden confirmation">
+        <p>¿Estás seguro de tu elección?</p>
+        <button id="confirmarSi">Sí</button>
+        <button id="confirmarNo">No</button>
+    </div>
+
+    <div id="ultimaConfirmacion" class="hidden confirmation">
+        <p>¿Última palabra?</p>
+        <button id="ultimaSi">Sí</button>
+        <button id="ultimaNo">No</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
+    <script src="script.js"></script>
+</body>
+</html>
