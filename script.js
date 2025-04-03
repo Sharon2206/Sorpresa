@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let eleccion = "";
 
-    // Asegurar que todos los elementos inician ocultos
+    // Ocultar todos los elementos al inicio
     opciones.style.display = "none";
     confirmacion.style.display = "none";
     rooftopForm.style.display = "none";
@@ -64,14 +64,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     confirmarSi?.addEventListener("click", function () {
-        console.log("Confirmación positiva");
+        console.log("Confirmación positiva. Elección:", eleccion);
 
         ocultarElemento(confirmacion);
 
         if (eleccion === "Rooftop") {
+            console.log("Mostrando formulario de Rooftop");
             mostrarElemento(rooftopForm);
         } else if (eleccion === "Glamping") {
+            console.log("Mostrando formulario de Glamping");
             mostrarElemento(glampingForm);
+        } else {
+            console.error("Error: Elección vacía.");
         }
     });
 
@@ -82,22 +86,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     guardarRooftop?.addEventListener("click", function () {
-        console.log("Guardando Rooftop");
+        console.log("Guardando Rooftop, mostrando última confirmación");
         ocultarElemento(rooftopForm);
         mostrarElemento(ultimaConfirmacion);
     });
 
     guardarGlamping?.addEventListener("click", function () {
-        console.log("Guardando Glamping");
+        console.log("Guardando Glamping, mostrando última confirmación");
         ocultarElemento(glampingForm);
         mostrarElemento(ultimaConfirmacion);
     });
 
     ultimaSi?.addEventListener("click", function () {
         console.log("Última confirmación positiva");
-
         ocultarElemento(ultimaConfirmacion);
-
         alert("¡Reserva confirmada! 🎉");
     });
 
