@@ -105,21 +105,49 @@ document.addEventListener("DOMContentLoaded", function () {
         ultimaConfirmacion.style.display = "block";
     });
 
-    ultimaSi?.addEventListener("click", function () {
-        console.log("Última confirmación positiva");
+   ultimaSi?.addEventListener("click", function () {
+    console.log("Última confirmación positiva");
 
-        fetch("https://script.google.com/macros/s/AKfycbwpTPnup0QKh7EACkSd2GpBD_2fCR3NQnYr7zCrbOLZa6-egoGa3nUvAOmCaQePaoL8pA/exec", {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ opcion: eleccion })
-        }).then(() => console.log("Datos enviados a Google Sheets"));
+    // Obtener la información del formulario
+    let datosFormulario = {};
+    
+    if (eleccion === "Rooftop") {
+        datosFormulario = {
+            opcion: "Rooftop",
+            nombre: document.getElementById("nombreRooftop").value,
+            telefono: document.getElementById("telefonoRooftop").value,
+            fecha: document.getElementById("fechaRooftop").value,
+            hora: document.getElementById("horaRooftop").value,
+            invitados: document.getElementById("invitadosRooftop").value,
+            comentarios: document.getElementById("comentariosRooftop").value
+        };
+    } else if (eleccion === "Glamping") {
+        datosFormulario = {
+            opcion: "Glamping",
+            nombre: document.getElementById("nombreGlamping").value,
+            telefono: document.getElementById("telefonoGlamping").value,
+            fecha: document.getElementById("fechaGlamping").value,
+            hora: document.getElementById("horaGlamping").value,
+            invitados: document.getElementById("invitadosGlamping").value,
+            comentarios: document.getElementById("comentariosGlamping").value
+        };
+    }
 
-        ultimaConfirmacion.style.display = "none";
-        imagenFinal.style.display = "block"; 
-    });
+    console.log("Datos enviados:", datosFormulario);
+
+    // Enviar los datos al script de Google Sheets
+    fetch("https://script.google.com/macros/s/AKfycbwpTPnup0QKh7EACkSd2GpBD_2fCR3NQnYr7zCrbOLZa6-egoGa3nUvAOmCaQePaoL8pA/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(datosFormulario)
+    }).then(() => console.log("Datos enviados a Google Sheets"));
+
+    ultimaConfirmacion.style.display = "none";
+    imagenFinal.style.display = "block"; 
+});
 
     ultimaNo?.addEventListener("click", function () {
         console.log("Última confirmación negativa");
