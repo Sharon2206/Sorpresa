@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let btnGlamping = document.getElementById("btnGlamping");
     let confirmacion = document.getElementById("confirmacion");
     let ultimaConfirmacion = document.getElementById("ultimaConfirmacion");
-    let ultimaPalabra = document.getElementById("ultimaPalabra"); // Asegurar elemento en HTML
+    let ultimaPalabra = document.getElementById("ultimaPalabra"); // Asegurar existencia en HTML
 
     let confirmarSi = document.getElementById("confirmarSi");
     let confirmarNo = document.getElementById("confirmarNo");
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Confirmación positiva");
         confirmacion.style.display = "none";
         
-        // Mostrar la sección "Última palabra" antes del formulario
+        // Asegurar que se muestre "Última palabra"
         ultimaPalabra.style.display = "block";  
         ultimaConfirmacion.style.display = "block";
     });
@@ -140,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify(datosFormulario)
         }).then(() => console.log("Datos enviados a Google Sheets"));
 
+        ultimaPalabra.style.display = "none";  // Asegurar que desaparezca después de la última confirmación
         ultimaConfirmacion.style.display = "none";
     });
 
@@ -159,3 +160,4 @@ document.addEventListener("DOMContentLoaded", function () {
     glampingForm.style.display = "none";
     ultimaPalabra.style.display = "none"; // Asegurar que no aparezca de inmediato
 });
+
