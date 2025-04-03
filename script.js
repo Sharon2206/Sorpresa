@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListenerdocument.addEventListener("DOMContentLoaded", function () {
     let opciones = document.getElementById("opciones");
     let btnSorpresa = document.getElementById("btnSorpresa");
     let container = document.querySelector(".container");
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let rooftopForm = document.getElementById("rooftopForm");
     let glampingForm = document.getElementById("glampingForm");
+    let imagenFinal = document.getElementById("imagenFinal"); 
 
     let eleccion = ""; 
 
@@ -49,17 +50,14 @@ document.addEventListener("DOMContentLoaded", function () {
         })();
     }
 
-    
     lanzarConfeti();
 
-    
     btnSorpresa?.addEventListener("click", function () {
         console.log("Botón de sorpresa presionado");
         container.style.display = "none";
         opciones.style.display = "flex";
     });
 
-    
     function seleccionarOpcion(opcion) {
         eleccion = opcion; 
         console.log("Opción seleccionada:", eleccion);
@@ -67,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         confirmacion.style.display = "block";
     }
 
-    
     btnRooftop?.addEventListener("click", function () {
         seleccionarOpcion("Rooftop");
     });
@@ -75,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
     btnGlamping?.addEventListener("click", function () {
         seleccionarOpcion("Glamping");
     });
-
 
     confirmarSi?.addEventListener("click", function () {
         console.log("Confirmación positiva");
@@ -91,6 +87,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ultimaSi?.addEventListener("click", function () {
         console.log("Última confirmación positiva");
+    
+        // Google Sheets
+        fetch("https://script.google.com/macros/s/AKfycbwpTPnup0QKh7EACkSd2GpBD_2fCR3NQnYr7zCrbOLZa6-egoGa3nUvAOmCaQePaoL8pA/exec", {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ opcion: eleccion })
+        }).then(() => {
+            console.log("Datos enviados a Google Sheets");
+
+            // Ocultar formularios y mostrar imagen final
+            rooftopForm.style.display = "none";
+            glampingForm.style.display = "none";
+            imagenFinal.style.display = "block";
+        });
 
         ultimaConfirmacion.style.display = "none";
 
@@ -109,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         opciones.style.display = "flex"; 
     });
 
-    
     rooftopForm.style.display = "none";
     glampingForm.style.display = "none";
+    imagenFinal.style.display = "none";  
 });
