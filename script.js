@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let glampingForm = document.getElementById("glampingForm");
     let imagenFinal = document.getElementById("imagenFinal");
 
+    let guardarRooftop = document.getElementById("guardarRooftop");
+    let guardarGlamping = document.getElementById("guardarGlamping");
+
     let eleccion = ""; 
 
     function lanzarConfeti() {
@@ -76,7 +79,13 @@ document.addEventListener("DOMContentLoaded", function () {
     confirmarSi?.addEventListener("click", function () {
         console.log("Confirmación positiva");
         confirmacion.style.display = "none";
-        ultimaConfirmacion.style.display = "block";
+
+        // Mostrar formulario correspondiente en lugar de la última confirmación
+        if (eleccion === "Rooftop") {
+            rooftopForm.style.display = "block";
+        } else if (eleccion === "Glamping") {
+            glampingForm.style.display = "block";
+        }
     });
 
     confirmarNo?.addEventListener("click", function () {
@@ -85,11 +94,20 @@ document.addEventListener("DOMContentLoaded", function () {
         opciones.style.display = "flex";
     });
 
-  
+    // Cuando el usuario completa el formulario, mostrar la última confirmación
+    guardarRooftop?.addEventListener("click", function () {
+        rooftopForm.style.display = "none";
+        ultimaConfirmacion.style.display = "block";
+    });
+
+    guardarGlamping?.addEventListener("click", function () {
+        glampingForm.style.display = "none";
+        ultimaConfirmacion.style.display = "block";
+    });
+
     ultimaSi?.addEventListener("click", function () {
         console.log("Última confirmación positiva");
 
-        
         fetch("https://script.google.com/macros/s/AKfycbwpTPnup0QKh7EACkSd2GpBD_2fCR3NQnYr7zCrbOLZa6-egoGa3nUvAOmCaQePaoL8pA/exec", {
             method: "POST",
             mode: "no-cors",
@@ -99,23 +117,24 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify({ opcion: eleccion })
         }).then(() => console.log("Datos enviados a Google Sheets"));
 
-       
         ultimaConfirmacion.style.display = "none";
-        rooftopForm.style.display = "none";
-        glampingForm.style.display = "none";
         imagenFinal.style.display = "block"; 
     });
 
     ultimaNo?.addEventListener("click", function () {
         console.log("Última confirmación negativa");
         ultimaConfirmacion.style.display = "none";
-        opciones.style.display = "flex"; 
+        
+        // Volver a mostrar el formulario en caso de que el usuario quiera cambiar algo
+        if (eleccion === "Rooftop") {
+            rooftopForm.style.display = "block";
+        } else if (eleccion === "Glamping") {
+            glampingForm.style.display = "block";
+        }
     });
 
- 
+    // Asegurar que todo está oculto al inicio
     rooftopForm.style.display = "none";
     glampingForm.style.display = "none";
     imagenFinal.style.display = "none";  
 });
-
-
