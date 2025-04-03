@@ -1,35 +1,33 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const opciones = document.getElementById("opciones");
-    const btnSorpresa = document.getElementById("btnSorpresa");
-    const container = document.querySelector(".container");
+document.addEventListenerdocument.addEventListener("DOMContentLoaded", function () {
+    let opciones = document.getElementById("opciones");
+    let btnSorpresa = document.getElementById("btnSorpresa");
+    let container = document.querySelector(".container");
 
-    const btnRooftop = document.getElementById("btnRooftop");
-    const btnGlamping = document.getElementById("btnGlamping");
-    const confirmacion = document.getElementById("confirmacion");
-    const ultimaConfirmacion = document.getElementById("ultimaConfirmacion");
+    let btnRooftop = document.getElementById("btnRooftop");
+    let btnGlamping = document.getElementById("btnGlamping");
+    let confirmacion = document.getElementById("confirmacion");
+    let ultimaConfirmacion = document.getElementById("ultimaConfirmacion");
 
-    const confirmarSi = document.getElementById("confirmarSi");
-    const confirmarNo = document.getElementById("confirmarNo");
-    const ultimaSi = document.getElementById("ultimaSi");
-    const ultimaNo = document.getElementById("ultimaNo");
+    let confirmarSi = document.getElementById("confirmarSi");
+    let confirmarNo = document.getElementById("confirmarNo");
+    let ultimaSi = document.getElementById("ultimaSi");
+    let ultimaNo = document.getElementById("ultimaNo");
 
-    const rooftopForm = document.getElementById("rooftopForm");
-    const glampingForm = document.getElementById("glampingForm");
-    const imagenFinal = document.getElementById("imagenFinal");
+    let rooftopForm = document.getElementById("rooftopForm");
+    let glampingForm = document.getElementById("glampingForm");
+    let imagenFinal = document.getElementById("imagenFinal"); 
 
-    const guardarRooftop = document.getElementById("guardarRooftop");
-    const guardarGlamping = document.getElementById("guardarGlamping");
-
-    let eleccion = "";
+    let eleccion = ""; 
 
     function lanzarConfeti() {
+        console.log("Lanzando confeti");
         if (typeof confetti !== "function") {
             console.error("Confetti.js no se ha cargado correctamente.");
             return;
         }
 
-        const duracion = 2000;
-        const end = Date.now() + duracion;
+        var duracion = 2 * 1000; 
+        var end = Date.now() + duracion;
 
         (function frame() {
             confetti({
@@ -52,6 +50,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })();
     }
 
+    lanzarConfeti();
+
     btnSorpresa?.addEventListener("click", function () {
         console.log("Botón de sorpresa presionado");
         container.style.display = "none";
@@ -59,24 +59,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function seleccionarOpcion(opcion) {
-        eleccion = opcion;
+        eleccion = opcion; 
         console.log("Opción seleccionada:", eleccion);
         opciones.style.display = "none";
         confirmacion.style.display = "block";
     }
 
-    btnRooftop?.addEventListener("click", () => seleccionarOpcion("Rooftop"));
-    btnGlamping?.addEventListener("click", () => seleccionarOpcion("Glamping"));
+    btnRooftop?.addEventListener("click", function () {
+        seleccionarOpcion("Rooftop");
+    });
+
+    btnGlamping?.addEventListener("click", function () {
+        seleccionarOpcion("Glamping");
+    });
 
     confirmarSi?.addEventListener("click", function () {
         console.log("Confirmación positiva");
         confirmacion.style.display = "none";
-
-        if (eleccion === "Rooftop") {
-            rooftopForm.style.display = "block";
-        } else if (eleccion === "Glamping") {
-            glampingForm.style.display = "block";
-        }
+        ultimaConfirmacion.style.display = "block";
     });
 
     confirmarNo?.addEventListener("click", function () {
@@ -85,71 +85,44 @@ document.addEventListener("DOMContentLoaded", function () {
         opciones.style.display = "flex";
     });
 
-    function guardarFormulario(formulario, mostrarConfirmacion) {
-        formulario.style.display = "none";
-        mostrarConfirmacion.style.display = "block";
-    }
-
-    guardarRooftop?.addEventListener("click", () => guardarFormulario(rooftopForm, ultimaConfirmacion));
-    guardarGlamping?.addEventListener("click", () => guardarFormulario(glampingForm, ultimaConfirmacion));
-
     ultimaSi?.addEventListener("click", function () {
         console.log("Última confirmación positiva");
-
-        let datosFormulario = {};
-
-        if (eleccion === "Rooftop") {
-            datosFormulario = {
-                opcion: "Rooftop",
-                nombre: document.getElementById("nombreRooftop")?.value,
-                telefono: document.getElementById("telefonoRooftop")?.value,
-                fecha: document.getElementById("fechaRooftop")?.value,
-                hora: document.getElementById("horaRooftop")?.value,
-                invitados: document.getElementById("invitadosRooftop")?.value,
-                comentarios: document.getElementById("comentariosRooftop")?.value
-            };
-        } else if (eleccion === "Glamping") {
-            datosFormulario = {
-                opcion: "Glamping",
-                nombre: document.getElementById("nombreGlamping")?.value,
-                telefono: document.getElementById("telefonoGlamping")?.value,
-                fecha: document.getElementById("fechaGlamping")?.value,
-                hora: document.getElementById("horaGlamping")?.value,
-                invitados: document.getElementById("invitadosGlamping")?.value,
-                comentarios: document.getElementById("comentariosGlamping")?.value
-            };
-        }
-
-        console.log("Datos enviados:", datosFormulario);
-
+    
+        // Google Sheets
         fetch("https://script.google.com/macros/s/AKfycbwpTPnup0QKh7EACkSd2GpBD_2fCR3NQnYr7zCrbOLZa6-egoGa3nUvAOmCaQePaoL8pA/exec", {
             method: "POST",
             mode: "no-cors",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(datosFormulario)
-        }).then(() => console.log("Datos enviados a Google Sheets"));
+            body: JSON.stringify({ opcion: eleccion })
+        }).then(() => {
+            console.log("Datos enviados a Google Sheets");
+
+            // Ocultar formularios y mostrar imagen final
+            rooftopForm.style.display = "none";
+            glampingForm.style.display = "none";
+            imagenFinal.style.display = "block";
+        });
 
         ultimaConfirmacion.style.display = "none";
-        imagenFinal.style.display = "block";
-        lanzarConfeti(); 
+
+        if (eleccion === "Rooftop") {
+            rooftopForm.style.display = "block";
+            glampingForm.style.display = "none";
+        } else if (eleccion === "Glamping") {
+            glampingForm.style.display = "block";
+            rooftopForm.style.display = "none";
+        }
     });
 
     ultimaNo?.addEventListener("click", function () {
         console.log("Última confirmación negativa");
         ultimaConfirmacion.style.display = "none";
-
-        if (eleccion === "Rooftop") {
-            rooftopForm.style.display = "block";
-        } else if (eleccion === "Glamping") {
-            glampingForm.style.display = "block";
-        }
+        opciones.style.display = "flex"; 
     });
 
-    // Ocultar elementos innecesarios al inicio
-    [rooftopForm, glampingForm, imagenFinal, ultimaConfirmacion].forEach(el => {
-        if (el) el.style.display = "none";
-    });
+    rooftopForm.style.display = "none";
+    glampingForm.style.display = "none";
+    imagenFinal.style.display = "none";  
 });
-
