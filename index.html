@@ -36,32 +36,31 @@
         </div>
     </div>
 
-<div id="rooftopForm" class="hidden formulario">
-    <h3>¿Prefieres en la tarde o en la noche?</h3>
-    <select>
-        <option value="tarde">Tarde</option>
-        <option value="noche">Noche</option>
-    </select>
-    <label>Selecciona el día:</label>
-    <input type="date">
-    <label>Selecciona la hora:</label>
-    <input type="time">
-    <button id="guardarRooftop" class="boton-hecho">¡Hecho!</button>
-</div>
+    <div id="rooftopForm" class="hidden formulario">
+        <h3>¿Prefieres en la tarde o en la noche?</h3>
+        <select id="horaRooftop">
+            <option value="tarde">Tarde</option>
+            <option value="noche">Noche</option>
+        </select>
+        <label>Selecciona el día:</label>
+        <input type="date" id="fechaRooftop">
+        <label>Selecciona la hora:</label>
+        <input type="time" id="horaEspecificaRooftop">
+        <button id="guardarRooftop" class="boton-hecho">¡Hecho!</button>
+    </div>
 
-<div id="glampingForm" class="hidden formulario">
-    <h3>¿Prefieres clima cálido o clima frío? </h3>
-    <select>
-        <option value="calido">Clima cálido</option>
-        <option value="frio">Clima frío</option>
-    </select>
-    <label>Selecciona el día:</label>
-    <input type="date">
-    <label>Selecciona la hora:</label>
-    <input type="time">
-    <button id="guardarGlamping" class="boton-hecho">¡Hecho!</button>
-</div>
-
+    <div id="glampingForm" class="hidden formulario">
+        <h3>¿Prefieres clima cálido o clima frío? </h3>
+        <select id="climaGlamping">
+            <option value="calido">Clima cálido</option>
+            <option value="frio">Clima frío</option>
+        </select>
+        <label>Selecciona el día:</label>
+        <input type="date" id="fechaGlamping">
+        <label>Selecciona la hora:</label>
+        <input type="time" id="horaGlamping">
+        <button id="guardarGlamping" class="boton-hecho">¡Hecho!</button>
+    </div>
 
     <div id="confirmacion" class="hidden confirmation">
         <p>¿Estás seguro de tu elección?</p>
@@ -73,6 +72,12 @@
         <p>¿Última palabra?</p>
         <button id="ultimaSi">Sí</button>
         <button id="ultimaNo">No</button>
+    </div>
+
+    <!-- Imagen final después de la selección -->
+    <div id="imagenFinal" class="hidden">
+        <h2>¡Esta bien..! 🎉</h2>
+        <img src="saw.jpg" alt="Confirmación">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
