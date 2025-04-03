@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let btnGlamping = document.getElementById("btnGlamping");
     let confirmacion = document.getElementById("confirmacion");
     let ultimaConfirmacion = document.getElementById("ultimaConfirmacion");
-    let ultimaPalabra = document.getElementById("ultimaPalabra"); // Asegurar existencia en HTML
 
     let confirmarSi = document.getElementById("confirmarSi");
     let confirmarNo = document.getElementById("confirmarNo");
@@ -80,10 +79,12 @@ document.addEventListener("DOMContentLoaded", function () {
     confirmarSi?.addEventListener("click", function () {
         console.log("Confirmación positiva");
         confirmacion.style.display = "none";
-        
-        // Asegurar que se muestre "Última palabra"
-        ultimaPalabra.style.display = "block";  
-        ultimaConfirmacion.style.display = "block";
+
+        if (eleccion === "Rooftop") {
+            rooftopForm.style.display = "block";
+        } else if (eleccion === "Glamping") {
+            glampingForm.style.display = "block";
+        }
     });
 
     confirmarNo?.addEventListener("click", function () {
@@ -93,13 +94,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     guardarRooftop?.addEventListener("click", function () {
-        ultimaPalabra.style.display = "none"; 
-        rooftopForm.style.display = "block";
+        console.log("Guardando Rooftop y mostrando última confirmación");
+        rooftopForm.style.display = "none";
+        ultimaConfirmacion.style.display = "block";
     });
 
     guardarGlamping?.addEventListener("click", function () {
-        ultimaPalabra.style.display = "none"; 
-        glampingForm.style.display = "block";
+        console.log("Guardando Glamping y mostrando última confirmación");
+        glampingForm.style.display = "none";
+        ultimaConfirmacion.style.display = "block";
     });
 
     ultimaSi?.addEventListener("click", function () {
@@ -140,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify(datosFormulario)
         }).then(() => console.log("Datos enviados a Google Sheets"));
 
-        ultimaPalabra.style.display = "none";  // Asegurar que desaparezca después de la última confirmación
         ultimaConfirmacion.style.display = "none";
     });
 
@@ -155,9 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Asegurar que todo está oculto al inicio
+   
     rooftopForm.style.display = "none";
     glampingForm.style.display = "none";
-    ultimaPalabra.style.display = "none"; // Asegurar que no aparezca de inmediato
+    ultimaConfirmacion.style.display = "none"; 
 });
-
